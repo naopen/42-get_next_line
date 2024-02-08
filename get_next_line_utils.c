@@ -12,74 +12,68 @@
 
 #include "get_next_line.h"
 
-size_t ft_strlen_gnl(const char *s)
+size_t	ft_strlen(const char *s)
 {
-    size_t i;
-
-    i = 0;
-    while (s && s[i])
-        i++;
-    return (i);
-}
-
-void *ft_memcpy_gnl(void *dst, const void *src, size_t n)
-{
-	size_t i;
+	size_t	i;
 
 	i = 0;
-	if (!dst && !src)
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strdup_gnl(const char *s)
+{
+	char	*ret;
+	size_t	i;
+
+	i = 0;
+	ret = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!ret)
 		return (NULL);
-	while (i < n)
+	while (s[i] != '\0')
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		ret[i] = s[i];
 		i++;
 	}
-	return (dst);
+	ret[i] = '\0';
+	return (ret);
 }
 
-char *ft_strdup_gnl(const char *s1)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	char *new_str;
-	size_t len;
+	char	*ret;
+	size_t	i;
+	size_t	j;
 
-	len = ft_strlen_gnl(s1);
-	new_str = malloc(sizeof(char) * (len + 1));
-	if (!new_str)
+	i = 0;
+	j = 0;
+	ret = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!ret)
+	{
+		free(s1);
 		return (NULL);
-	ft_memcpy_gnl(new_str, s1, len);
-	new_str[len] = '\0';
-	return (new_str);
+	}
+	while (s1[i] != '\0')
+		ret[j++] = s1[i++];
+	i = 0;
+	while (s2[i] != '\0')
+		ret[j++] = s2[i++];
+	ret[j] = '\0';
+	free(s1);
+	return (ret);
 }
 
-char *ft_strjoin_gnl(char *s1, char *s2)
+int	has_newline(char *s)
 {
-    char *new_str;
-    size_t len1;
-    size_t len2;
+	size_t	i;
 
-    if (!s1 && !s2)
-        return (NULL);
-    len1 = ft_strlen_gnl(s1);
-    len2 = ft_strlen_gnl(s2);
-    new_str = malloc(sizeof(char) * (len1 + len2 + 1));
-    if (!new_str)
-        return (NULL);
-    ft_memcpy_gnl(new_str, s1, len1);
-    ft_memcpy_gnl(new_str + len1, s2, len2);
-    new_str[len1 + len2] = '\0';
-    free(s1);
-    return (new_str);
-}
-
-char *ft_strchr_gnl(const char *s, int c)
-{
-    while (s && *s)
-    {
-        if (*s == (char)c)
-            return ((char *)s);
-        s++;
-    }
-    if (c == '\0')
-        return ((char *)s);
-    return (NULL);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

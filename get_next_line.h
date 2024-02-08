@@ -17,14 +17,19 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# ifndef OPEN_MAX
+#  define OPEN_MAX 256
+# endif
+
+# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-char *get_next_line(int fd);
+char	*get_next_line(int fd);
 
-size_t ft_strlen_gnl(const char *s);
-char *ft_strdup_gnl(const char *s1);
-char *ft_strjoin_gnl(char const *s1, char const *s2);
-char *ft_strchr_gnl(const char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup_gnl(const char *s1);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+int		has_newline(char *s);
 
 #endif
