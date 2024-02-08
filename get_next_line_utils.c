@@ -22,17 +22,33 @@ size_t ft_strlen_gnl(const char *s)
     return (i);
 }
 
-char *ft_strchr_gnl(const char *s, int c)
+void *ft_memcpy_gnl(void *dst, const void *src, size_t n)
 {
-    while (s && *s)
-    {
-        if (*s == (char)c)
-            return ((char *)s);
-        s++;
-    }
-    if (c == '\0')
-        return ((char *)s);
-    return (NULL);
+	size_t i;
+
+	i = 0;
+	if (!dst && !src)
+		return (NULL);
+	while (i < n)
+	{
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
+	}
+	return (dst);
+}
+
+char *ft_strdup_gnl(const char *s1)
+{
+	char *new_str;
+	size_t len;
+
+	len = ft_strlen_gnl(s1);
+	new_str = malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+		return (NULL);
+	ft_memcpy_gnl(new_str, s1, len);
+	new_str[len] = '\0';
+	return (new_str);
 }
 
 char *ft_strjoin_gnl(char *s1, char *s2)
@@ -55,49 +71,15 @@ char *ft_strjoin_gnl(char *s1, char *s2)
     return (new_str);
 }
 
-void *ft_memcpy_gnl(void *dst, const void *src, size_t n)
+char *ft_strchr_gnl(const char *s, int c)
 {
-	unsigned char *d;
-	unsigned char *s;
-
-	if (!dst && !src)
-		return (NULL);
-	d = (unsigned char *)dst;
-	s = (unsigned char *)src;
-	while (n--)
-		*d++ = *s++;
-	return (dst);
-}
-
-
-char *extract_line_from_remainder(char **remainder)
-{
-    char *line;
-    char *new_remainder;
-    char *newline_ptr;
-    size_t line_len;
-
-    if (!*remainder)
-        return (NULL);
-    newline_ptr = ft_strchr_gnl(*remainder, '\n');
-    if (newline_ptr)
+    while (s && *s)
     {
-        line_len = newline_ptr - *remainder + 1;
-        line = ft_substr_gnl(*remainder, 0, line_len);
-        new_remainder = ft_strdup_gnl(newline_ptr + 1);
-        free(*remainder);
-        *remainder = new_remainder;
-        if (**remainder == '\0')
-        {
-            free(*remainder);
-            *remainder = NULL;
-        }
+        if (*s == (char)c)
+            return ((char *)s);
+        s++;
     }
-    else
-    {
-        line = ft_strdup_gnl(*remainder);
-        free(*remainder);
-        *remainder = NULL;
-    }
-    return (line);
+    if (c == '\0')
+        return ((char *)s);
+    return (NULL);
 }
