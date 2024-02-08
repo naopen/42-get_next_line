@@ -6,7 +6,7 @@
 /*   By: nkannan <nkannan@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 08:46:56 by nkannan           #+#    #+#             */
-/*   Updated: 2024/02/09 05:29:34 by nkannan          ###   ########.fr       */
+/*   Updated: 2024/02/09 05:34:04 by nkannan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*read_and_store_data(int fd, char **store)
 		if (*store == NULL)
 			*store = ft_strdup_gnl(buf);
 		else
-			*store = ft_strjoin_gnl(*score, buf);
+			*store = ft_strjoin_gnl(*store, buf);
 		free(buf);
 		if (*store == NULL)
 			return (NULL);
