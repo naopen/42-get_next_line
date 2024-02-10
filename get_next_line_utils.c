@@ -6,7 +6,7 @@
 /*   By: nkannan <nkannan@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 08:48:52 by nkannan           #+#    #+#             */
-/*   Updated: 2024/02/11 04:02:23 by nkannan          ###   ########.fr       */
+/*   Updated: 2024/02/11 04:28:37 by nkannan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	return (ret);
 }
 
+// Check if the string has a newline character
 int	has_newline(const char *s)
 {
 	size_t	i;

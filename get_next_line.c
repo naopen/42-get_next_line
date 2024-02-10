@@ -6,13 +6,13 @@
 /*   By: nkannan <nkannan@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 08:46:56 by nkannan           #+#    #+#             */
-/*   Updated: 2024/02/11 04:16:58 by nkannan          ###   ########.fr       */
+/*   Updated: 2024/02/11 04:27:56 by nkannan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// ファイルディスクリプタからデータを読み込み、結果を保存する関数
+// Read data from the file descriptor and store the result
 char	*read_and_store_data(int fd, char **store)
 {
 	char	*buf;
@@ -40,7 +40,7 @@ char	*read_and_store_data(int fd, char **store)
 	return (store[fd]);
 }
 
-// 保存された文字列から1行を抽出する関数
+// Get A line from the stored string
 char	*get_line(char *store)
 {
 	char	*line;
@@ -60,7 +60,7 @@ char	*get_line(char *store)
 		line[cnt] = store[cnt];
 		cnt++;
 	}
-	if (store[cnt] == '\n') // 消せるかも？
+	if (store[cnt] == '\n')
 	{
 		line[cnt] = '\n';
 		cnt++;
@@ -69,7 +69,7 @@ char	*get_line(char *store)
 	return (line);
 }
 
-// 既に取り出された行をストアから削除し、残ったデータを更新する関数
+// Update the stored string by removing the line that has already been taken out
 char	*update_store(char *store)
 {
 	char	*new_store;
@@ -93,6 +93,7 @@ char	*update_store(char *store)
 	return (new_store);
 }
 
+// Get the next line from the file descriptor
 char	*get_next_line(int fd)
 {
 	static char	*store[OPEN_MAX];
