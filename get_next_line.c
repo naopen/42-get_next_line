@@ -6,7 +6,7 @@
 /*   By: nkannan <nkannan@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 08:46:56 by nkannan           #+#    #+#             */
-/*   Updated: 2024/02/09 05:34:04 by nkannan          ###   ########.fr       */
+/*   Updated: 2024/02/11 04:16:58 by nkannan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ char	*read_and_store_data(int fd, char **store)
 		if (read_size == -1)
 			return (free(buf), NULL);
 		buf[read_size] = '\0';
-		if (*store == NULL)
-			*store = ft_strdup_gnl(buf);
+		if (store[fd] == NULL)
+			store[fd] = ft_strdup_gnl(buf);
 		else
-			*store = ft_strjoin_gnl(*store, buf);
+			store[fd] = ft_strjoin_gnl(store[fd], buf);
 		free(buf);
-		if (*store == NULL)
+		if (store[fd] == NULL)
 			return (NULL);
-		if (has_newline(*store) || read_size == 0)
+		if (has_newline(store[fd]) || read_size == 0)
 			break ;
 	}
-	return (*store);
+	return (store[fd]);
 }
 
 // 保存された文字列から1行を抽出する関数
@@ -62,7 +62,7 @@ char	*get_line(char *store)
 	}
 	if (store[cnt] == '\n') // 消せるかも？
 	{
-		line[cnt] = store[cnt];
+		line[cnt] = '\n';
 		cnt++;
 	}
 	line[cnt] = '\0';
@@ -81,10 +81,7 @@ char	*update_store(char *store)
 	while (store[i] != '\n' && store[i] != '\0')
 		i++;
 	if (store[i] == '\0')
-	{
-		free(store);
-		return (NULL);
-	}
+		return (free(store), NULL);
 	new_store = (char *)malloc(sizeof(char) * (ft_strlen(store) - i + 1));
 	if (!new_store)
 		return (NULL);
@@ -108,29 +105,32 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(store[fd]);
 	if (line == NULL)
-		return (free(store[fd]), NULL);
+	{
+		store[fd] = NULL;
+		return (NULL);
+	}
 	store[fd] = update_store(store[fd]);
 	if (store[fd] == NULL && line[0] == '\0')
 		return (free(line), NULL);
 	return (line);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
+// #include <fcntl.h>
+// #include <stdio.h>
 
-int	main(void)
-{
-	int		fd;
-	int		i;
-	char	*line;
+// int	main(void)
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*line;
 
-	i = 0;
-	fd = open("get_next_line.c", O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%d: %s\n", i++, line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
+// 	i = 0;
+// 	fd = open("get_next_line.c", O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%d: %s\n", i++, line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
