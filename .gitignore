@@ -3,6 +3,8 @@
 *.log
 .vscode/
 *.dSYM/
+GNL_malloc_tester/
+gnlTester/
 
 # Object files
 *.o

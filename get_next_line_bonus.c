@@ -6,7 +6,7 @@
 /*   By: nkannan <nkannan@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 08:46:56 by nkannan           #+#    #+#             */
-/*   Updated: 2024/02/11 04:42:57 by nkannan          ###   ########.fr       */
+/*   Updated: 2024/02/11 05:59:57 by nkannan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	static char	*store[OPEN_MAX];
 	char		*line;
 
-	if (fd < 0 || OPEN_MAX <= fd || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return (NULL);
 	store[fd] = read_and_store_data(fd, store);
 	if (store[fd] == NULL)
